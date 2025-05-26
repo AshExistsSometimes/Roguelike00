@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleSprint()
     {
-        if (PlayerInputManager.Instance.IsSprinting)
+        if (PlayerInputManager.Instance.SprintKey)
         {
             currentSpeed = SprintSpeed;
         }
