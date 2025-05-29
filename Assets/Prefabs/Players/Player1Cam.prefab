@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 303b2fd888573054d91428462e3f85f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTarget: {fileID: 0}
-  positionOffset: {x: 9, y: 12.5, z: -9}
-  rotationEuler: {x: 45, y: -45, z: 0}
+  playerTarget: {fileID: 5642909882776841207, guid: e6fb3705145e3fd49bdc55eada195c97, type: 3}
+  positionOffset: {x: 0, y: 12, z: -11.5}
+  rotationEuler: {x: 45, y: 0, z: 0}
   followSmoothTime: 0.2
