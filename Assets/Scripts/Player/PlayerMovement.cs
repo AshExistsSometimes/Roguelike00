@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         currentSpeed = WalkSpeed;
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Update()
@@ -107,6 +110,22 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 verticalMove = new Vector3(0, verticalVelocity, 0);
         characterController.Move(verticalMove * Time.deltaTime);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameObject spawnPoint = GameObject.FindWithTag("PlayerSpawnPoint");
+        if (spawnPoint != null)
+        {
+            characterController.enabled = false; // Disable to safely move without physics issues
+            transform.position = spawnPoint.transform.position;
+            characterController.enabled = true;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
 }
