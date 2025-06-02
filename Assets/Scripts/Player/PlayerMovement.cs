@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("References")]
     public Camera mainCamera;
+    public Transform modelPosition;
 
     [Header("Speed Settings")]
     public float WalkSpeed = 6f;
@@ -23,11 +24,28 @@ public class PlayerMovement : MonoBehaviour
     private float currentSpeed;
     private float verticalVelocity;
 
+    [Header("Character Data")]
+    public CharacterData selectedCharacter;
+    public CharacterData defaultCharacter;
+
     private void Start()
     {
         currentSpeed = WalkSpeed;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        if (selectedCharacter == null)
+        {
+            selectedCharacter = defaultCharacter;
+        }
+
+        SpawnCharacterModel();
+
+        // Update HUD icon to match selected character
+        if (HUDSingleton.Instance != null)
+        {
+            HUDSingleton.Instance.SetCharacterIcon(selectedCharacter.characterIcon);
+        }
     }
 
     private void Update()
@@ -126,6 +144,26 @@ public class PlayerMovement : MonoBehaviour
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    public void SpawnCharacterModel()
+    {
+        if (selectedCharacter == null || selectedCharacter.characterModelPrefab == null)
+        {
+            Debug.LogWarning("No character data or model prefab set!");
+            return;
+        }
+
+        // Clear previous model if any
+        foreach (Transform child in modelPosition)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Spawn the new model
+        GameObject model = Instantiate(selectedCharacter.characterModelPrefab, modelPosition);
+        model.transform.localPosition = Vector3.zero;
+        model.transform.localRotation = Quaternion.identity;
     }
 
 }

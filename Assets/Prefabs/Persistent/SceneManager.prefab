@@ -47,3 +47,4 @@ MonoBehaviour:
   playerPrefab: {fileID: 5788202067712461167, guid: e6fb3705145e3fd49bdc55eada195c97, type: 3}
   cameraPrefab: {fileID: 7821589995254466634, guid: 2b760aef81093684cbd1b02b9a304960, type: 3}
   uiPrefab: {fileID: 626862748023019435, guid: 690fb601672367040aacb426a82a38ae, type: 3}
+  inputManagerPrefab: {fileID: 4410861376158541591, guid: b8b1ac097ab1c9445956382665e9224a, type: 3}
