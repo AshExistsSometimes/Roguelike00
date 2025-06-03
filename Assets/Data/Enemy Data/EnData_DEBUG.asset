@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe7c962ac635f94080de033fde0dfa6, type: 3}
   m_Name: EnData_DEBUG
   m_EditorClassIdentifier: 
-  enemyName: EVIL DEBUG MAN
+  enemyName: Debug enemy
   enemyType: 0
   preferredRange: 0
   maxHP: 40

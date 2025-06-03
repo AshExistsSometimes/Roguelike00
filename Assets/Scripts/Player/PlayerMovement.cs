@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour, IDamageable
     public float gravity = 9.81f;
     public float maxFallSpeed = -10f;
 
-    private float currentSpeed;
     private float verticalVelocity;
 
     [Header("Character Stats")]
@@ -30,12 +29,13 @@ public class PlayerMovement : MonoBehaviour, IDamageable
     public int currentHP;
     [Space]
     public int attackDamage;
+    public float moveSpeed;
+    private float currentSpeed;
 
     public float attackSpeed;// Attacks per second
     private float attackCooldown;  // time between attacks
     private float attackTimer = 0f;
 
-    public float moveSpeed;
 
     [Header("Attack")]
     public Transform rangedFirePoint; // assign an empty GameObject where projectiles spawn
@@ -46,7 +46,15 @@ public class PlayerMovement : MonoBehaviour, IDamageable
     public CharacterData selectedCharacter;
     public CharacterData defaultCharacter;
 
-    private bool isAttacking = false;
+
+    [Header("Current Stats")]
+    public int CurrentMaxHP;
+    [Space]
+    public int CurrentDamage;
+
+    public float CurrentAttackSpeed;
+
+    public float CurrentSpeedStat;
 
     private void Start()
     {
@@ -60,6 +68,12 @@ public class PlayerMovement : MonoBehaviour, IDamageable
         {
             selectedCharacter = defaultCharacter;
         }
+
+        // TEMPORARY UNTIL SET DYNAMICALLY
+        CurrentMaxHP = selectedCharacter.baseHP;
+        CurrentDamage = selectedCharacter.baseAttackDamage;
+        CurrentAttackSpeed = selectedCharacter.baseAttackSpeed;
+        CurrentSpeedStat = selectedCharacter.baseSpeed;
 
         SpawnCharacterModel();
 
@@ -241,8 +255,6 @@ public class PlayerMovement : MonoBehaviour, IDamageable
 
     private IEnumerator PerformMeleeAttack()
     {
-        isAttacking = true;
-
         // Set current attack damage from character data
         int attackDamage = selectedCharacter.baseAttackDamage;
 

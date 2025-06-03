@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae88d2db70c94a4cae3b3115df95527, type: 3}
+  m_Name: DebugItem
+  m_EditorClassIdentifier: 
+  itemName: Debug item
+  description: an oddity
+  rarity: 0
+  statModifiers:
+  - statType: 0
+    isMultiplier: 1
+    value: 15
+  - statType: 3
+    isMultiplier: 0
+    value: -1
+  uniqueEffect: 0
+  modelPrefab: {fileID: 4422970937050545558, guid: 72808c78506df2a45b7981c1e5087749, type: 3}
+  rarityColors:
+  - rarity: 0
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - rarity: 1
+    color: {r: 0, g: 1, b: 0.010702372, a: 0}
+  - rarity: 2
+    color: {r: 0, g: 0.7518301, b: 1, a: 0}
+  - rarity: 3
+    color: {r: 0.68366146, g: 0, b: 1, a: 0}
+  - rarity: 4
+    color: {r: 1, g: 0.58513975, b: 0, a: 0}

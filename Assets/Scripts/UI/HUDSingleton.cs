@@ -22,7 +22,7 @@ public class HUDSingleton : MonoBehaviour
             return;
         }
 
-        player = GetComponent<PlayerMovement>();
+        //player = GetComponent<PlayerMovement>();
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
