@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe7c962ac635f94080de033fde0dfa6, type: 3}
+  m_Name: EnData_DEBUG
+  m_EditorClassIdentifier: 
+  enemyName: EVIL DEBUG MAN
+  enemyType: 0
+  preferredRange: 0
+  maxHP: 40
+  damage: 1
+  moveSpeed: 4
+  enemyModelPrefab: {fileID: 6086254952648728955, guid: d652dc12a11901542b55686b1ddf5bdb, type: 3}
