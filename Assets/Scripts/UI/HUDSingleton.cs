@@ -11,6 +11,9 @@ public class HUDSingleton : MonoBehaviour
     public Slider healthBar;
     public Image characterIconImage;
 
+    private int lastHP;
+    public PlayerMovement player;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -19,8 +22,20 @@ public class HUDSingleton : MonoBehaviour
             return;
         }
 
+        player = GetComponent<PlayerMovement>();
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        lastHP = player.currentHP;
+    }
+
+    private void Update()
+    {
+        if (player.currentHP != lastHP)
+        {
+            SetHealth(player.currentHP, player.maxHP);
+            lastHP = player.currentHP;
+        }
     }
 
     // Called by player script to update health

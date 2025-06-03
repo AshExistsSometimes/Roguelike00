@@ -193,6 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 8246174366837392155}
   characterIconImage: {fileID: 9210744189179668345}
+  player: {fileID: 1962916203855038112, guid: e6fb3705145e3fd49bdc55eada195c97, type: 3}
 --- !u!1 &2282708045680291422
 GameObject:
   m_ObjectHideFlags: 0

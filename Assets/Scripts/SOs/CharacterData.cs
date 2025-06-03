@@ -17,6 +17,11 @@ public class CharacterData : ScriptableObject
     public float baseAttackSpeed;
     public float baseSpeed;
 
+    [Header("Character Type")]
+    public bool isMelee;
+
     [Header("References")]
     public GameObject characterModelPrefab;
+    [Space]
+    public GameObject projectilePrefab; // only for ranged characters
 }

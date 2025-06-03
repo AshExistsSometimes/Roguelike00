@@ -49,6 +49,7 @@ public class CharacterSelectUI : MonoBehaviour
     {
         PlayerMovement player = PlayerSingleton.Instance.GetComponent<PlayerMovement>();
         player.selectedCharacter = data;
+        player.ApplyCharacterStats(data); // Applies stats + sets HUD + sets selectedCharacter
 
         // Update UI as before
         characterPortrait.sprite = data.characterIcon;

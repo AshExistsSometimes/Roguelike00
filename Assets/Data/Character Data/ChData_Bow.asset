@@ -16,6 +16,8 @@ MonoBehaviour:
   characterIcon: {fileID: 21300000, guid: b962e19ef47bc664187a6c27c43c2acb, type: 3}
   baseHP: 5
   baseAttackDamage: 7
-  baseAttackSpeed: 7
-  baseSpeed: 10
+  baseAttackSpeed: 2
+  baseSpeed: 7
+  isMelee: 0
   characterModelPrefab: {fileID: 6086254952648728955, guid: 052f92b453347224aab2c4aaaaada1e9, type: 3}
+  projectilePrefab: {fileID: 6920495686042601704, guid: 580d5cb893fc8c54aab02fa35a6ef623, type: 3}
