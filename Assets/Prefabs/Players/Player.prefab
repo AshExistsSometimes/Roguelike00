@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 5642909882776841207}
   - component: {fileID: 6373043308954146511}
   - component: {fileID: 1962916203855038112}
+  - component: {fileID: 8047965572844616194}
   - component: {fileID: 5379969161413096752}
   m_Layer: 0
   m_Name: Player
@@ -294,13 +295,29 @@ MonoBehaviour:
   maxHP: 0
   currentHP: 0
   attackDamage: 0
-  attackSpeed: 0
   moveSpeed: 0
+  attackSpeed: 0
   rangedFirePoint: {fileID: 3130908169365293935}
   meleeHitboxObject: {fileID: 897346170457248430}
   meleeAttackDuration: 0.2
   selectedCharacter: {fileID: 0}
   defaultCharacter: {fileID: 11400000, guid: af0874c19c9c33343bd2868ae49b519a, type: 2}
+  CurrentMaxHP: 0
+  CurrentDamage: 0
+  CurrentAttackSpeed: 0
+  CurrentSpeedStat: 0
+--- !u!114 &8047965572844616194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5788202067712461167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52be7da904fc6f45a5ba998b8eca4cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5379969161413096752
 MonoBehaviour:
   m_ObjectHideFlags: 0

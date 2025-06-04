@@ -4,6 +4,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Dungeon/Procedural Dungeon Data")]
 public class DungeonData : ScriptableObject
 {
+    [Header("Identification")]
+    public string dungeonID; // Unique ID used in save data and lobby UI
+    public string dungeonDisplayName; // Display name
+    public Sprite dungeonIcon;
+    [Header("Scene Reference")]
+    public string floorSceneName; // Scene to load for floors of this dungeon
+
     [Header("Room Prefabs")]
     public GameObject startRoomPrefab;
 
@@ -18,7 +25,7 @@ public class DungeonData : ScriptableObject
     public int maxRoomCount = 5;
     public int roomCountGrowthPerFloor = 1;
 
-    [Header("Boss Logic")]
+    [Header("Boss Room Frequency")]
     [Tooltip("How many floors between bosses. 1 = boss every floor.")]
     public int floorsPerBoss = 3;
 }

@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4735225675458609018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7075572313267928728}
+  - component: {fileID: 2060764903498358020}
+  - component: {fileID: 1123699867928594630}
+  m_Layer: 0
+  m_Name: Item Spawner
+  m_TagString: Pickup
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7075572313267928728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4735225675458609018}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 101.22, y: 5.98, z: 30.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2060764903498358020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4735225675458609018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a8e4c11369921499dc893ac4fae17c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPool:
+  - {fileID: 11400000, guid: cba039776f44a0447a56e0e547dce22d, type: 2}
+  rarityChances:
+  - rarity: 0
+    chance: 40
+  - rarity: 1
+    chance: 30
+  - rarity: 2
+    chance: 20
+  - rarity: 3
+    chance: 8
+  - rarity: 4
+    chance: 2
+  pickupPrefab: {fileID: 2680215986737828804, guid: 5c5cb8fbd17ef63429f197003b4d2ded, type: 3}
+  modelSpawnPoint: {fileID: 0}
+  worldspaceUIPrefab: {fileID: 7731866126437430873, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
+  spawnedItemData: {fileID: 0}
+--- !u!135 &1123699867928594630
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4735225675458609018}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2.5
+  m_Center: {x: 0, y: 0, z: 0}

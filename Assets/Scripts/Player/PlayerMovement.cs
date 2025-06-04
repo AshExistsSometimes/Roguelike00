@@ -285,7 +285,6 @@ public class PlayerMovement : MonoBehaviour, IDamageable
             Vector3 target = hit.point;
             target.y = rangedFirePoint.position.y; // flatten Y to projectile height
             direction = (target - rangedFirePoint.position).normalized;
-            Debug.Log("Target acquired at " + target);
         }
         else
         {
@@ -305,7 +304,6 @@ public class PlayerMovement : MonoBehaviour, IDamageable
         if (projectile.TryGetComponent<Projectile>(out var projScript))
         {
             projScript.Initialize(CurrentDamage, gameObject);
-            Debug.Log("Projectile initialized and launched.");
         }
         else
         {
@@ -333,7 +331,6 @@ public class PlayerMovement : MonoBehaviour, IDamageable
 
     public void RecalculateStatsFromInventory()
     {
-        Debug.Log("recalculating stats!");
         // Start from base stats
         CurrentMaxHP = selectedCharacter.baseHP;
         CurrentDamage = selectedCharacter.baseAttackDamage;

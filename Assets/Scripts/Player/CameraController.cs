@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
@@ -17,6 +16,9 @@ public class CameraController : MonoBehaviour
     private Vector3 currentOffset;
     private Vector3 velocity = Vector3.zero;
     private Quaternion targetRotation;
+    private Transform currentTarget;
+
+    private Coroutine overrideRoutine;
 
     private void Start()
     {
@@ -24,32 +26,44 @@ public class CameraController : MonoBehaviour
         targetRotation = Quaternion.Euler(defaultRotationEuler);
         transform.rotation = targetRotation;
 
-            if (playerTarget == null && PlayerSingleton.Instance != null)
-            {
-                playerTarget = PlayerSingleton.Instance.transform;
-            }
+        if (playerTarget == null && PlayerSingleton.Instance != null)
+            playerTarget = PlayerSingleton.Instance.transform;
+
+        currentTarget = playerTarget;
     }
 
     private void LateUpdate()
     {
-        if (!playerTarget) return;
+        if (!currentTarget) return;
 
-        Vector3 targetPosition = playerTarget.position + currentOffset;
+        Vector3 targetPosition = currentTarget.position + currentOffset;
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, followSmoothTime);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
     }
 
-    // Call this from a trigger to change camera position
-    public void SetCameraOverride(Vector3 newOffset, Vector3 newRotationEuler)
+    public void SetCameraOverride(Vector3 newOffset, Vector3 newRotationEuler, Transform overrideTarget = null, float duration = 0f)
     {
         currentOffset = newOffset;
         targetRotation = Quaternion.Euler(newRotationEuler);
+        currentTarget = overrideTarget != null ? overrideTarget : playerTarget;
+
+        if (overrideRoutine != null)
+            StopCoroutine(overrideRoutine);
+
+        if (duration > 0f)
+            overrideRoutine = StartCoroutine(ResetAfterDelay(duration));
     }
 
-    // Call this to return to default camera position
     public void ReturnToDefaultCameraAngle()
     {
         currentOffset = defaultPositionOffset;
         targetRotation = Quaternion.Euler(defaultRotationEuler);
+        currentTarget = playerTarget;
+    }
+
+    private IEnumerator ResetAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ReturnToDefaultCameraAngle();
     }
 }

@@ -28,20 +28,17 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Projectile hit: {other.name}");
         // Don't hit the instigator (usually the player)
         if (other.gameObject == shooter)
             return;
 
         if (other.TryGetComponent<IDamageable>(out var damageable))
         {
-            Debug.Log($"Hit damageable: {other.name}, applying damage {damage}");
             damageable.TakeDamage(damage);
             Destroy(gameObject);
         }
         else if (!other.isTrigger)
         {
-            Debug.Log("Hit non-trigger collider, destroying projectile.");
             Destroy(gameObject);
         }
     }
