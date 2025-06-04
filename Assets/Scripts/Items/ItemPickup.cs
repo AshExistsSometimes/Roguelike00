@@ -71,16 +71,30 @@ public class ItemPickup : MonoBehaviour
             statsText.text = "";
             foreach (var mod in itemData.statModifiers)
             {
-                string colorTag = mod.value >= 0 ? "<color=#4CFF4C>" : "<color=#FF4C4C>"; // Green if positive, red if negative
-                string sign = mod.isMultiplier ? "x" : (mod.value >= 0 ? "+" : "-");
-                string valStr = mod.isMultiplier ? mod.value.ToString("F2") : Mathf.Abs(mod.value).ToString("F1");
+                string sign = mod.value >= 0 ? "+" : "";
+                string modText;
 
-                statsText.text += $"{mod.statType}: {colorTag}{sign}{valStr}</color>\n";
+                if (mod.isMultiplier)
+                {
+                    // Format multiplier as percentage with sign
+                    modText = $"{sign}{mod.value}%";
+                }
+                else
+                {
+                    // Format additive as plain number with sign
+                    modText = $"{sign}{mod.value}";
+                }
+
+                // Choose color based on positive or negative modifier
+                string color = mod.value >= 0 ? "#00FF00" : "#FF0000"; // green for positive, red for negative
+
+                // Append formatted text to UI string
+                statsText.text += $"\n<color={color}>{modText} {mod.statType}</color>";
             }
 
             if (itemData.uniqueEffect != ItemData.UniqueEffect.None)
             {
-                statsText.text += $"Effect: {itemData.uniqueEffect}\n";
+                statsText.text += $"\nApplies {itemData.uniqueEffect}\n";
             }
         }
     }

@@ -52,7 +52,7 @@ public class InventoryUI : MonoBehaviour
             GameObject entry = Instantiate(itemEntryPrefab, itemListParent);
             TextMeshProUGUI entryText = entry.GetComponentInChildren<TextMeshProUGUI>();
             string rarityHex = item.GetRarityHex();
-            entryText.text = $"<color={rarityHex}>{item.itemName}</color> - {FormatModifiers(item)}";
+            entryText.text = $"<color={rarityHex}>{item.itemName}</color>\n{FormatModifiers(item)}";
         }
     }
 
@@ -107,6 +107,6 @@ public class InventoryUI : MonoBehaviour
             parts.Add($"<color={color}>{valueText} {mod.statType}</color>");
         }
 
-        return string.Join(", ", parts);
+        return string.Join("\n", parts);
     }
 }

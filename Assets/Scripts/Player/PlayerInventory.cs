@@ -6,6 +6,7 @@ using static UnityEditor.Progress;
 public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory Instance { get; private set; }
+    private PlayerMovement player;
 
     // The list of items collected this run
     public List<ItemData> collectedItems = new List<ItemData>();
@@ -20,6 +21,8 @@ public class PlayerInventory : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        player = GetComponent<PlayerMovement>();
     }
 
     // Adds an item to the inventory
@@ -34,7 +37,11 @@ public class PlayerInventory : MonoBehaviour
         collectedItems.Add(item);
         Debug.Log($"Added item: {item.itemName} to inventory. Total items: {collectedItems.Count}");
 
-        // TODO: Apply item effects/stats to player here or in a separate system
+        // Recalculate player stats
+        if (player != null)
+        {
+            player.RecalculateStatsFromInventory();
+        }
     }
 
     // Returns the current list of collected items (read-only)
@@ -47,6 +54,21 @@ public class PlayerInventory : MonoBehaviour
     public void ClearInventory()
     {
         collectedItems.Clear();
+        StartCoroutine(RecalculateWhenPlayerExists());
         Debug.Log("Inventory cleared.");
+    }
+
+    private IEnumerator RecalculateWhenPlayerExists()
+    {
+        PlayerMovement player = null;
+
+        // Wait until player exists
+        while (player == null)
+        {
+            player = FindObjectOfType<PlayerMovement>();
+            yield return null;
+        }
+
+        player.RecalculateStatsFromInventory();
     }
 }

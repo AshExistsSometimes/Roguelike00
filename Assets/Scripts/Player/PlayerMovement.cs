@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using static ItemData;
 
 public class PlayerMovement : MonoBehaviour, IDamageable
 {
@@ -60,7 +61,7 @@ public class PlayerMovement : MonoBehaviour, IDamageable
     {
         currentSpeed = WalkSpeed;
         currentHP = maxHP;
-        attackCooldown = 1f / attackSpeed;
+        attackCooldown = 1f / CurrentAttackSpeed;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -68,12 +69,6 @@ public class PlayerMovement : MonoBehaviour, IDamageable
         {
             selectedCharacter = defaultCharacter;
         }
-
-        // TEMPORARY UNTIL SET DYNAMICALLY
-        CurrentMaxHP = selectedCharacter.baseHP;
-        CurrentDamage = selectedCharacter.baseAttackDamage;
-        CurrentAttackSpeed = selectedCharacter.baseAttackSpeed;
-        CurrentSpeedStat = selectedCharacter.baseSpeed;
 
         SpawnCharacterModel();
 
@@ -86,6 +81,7 @@ public class PlayerMovement : MonoBehaviour, IDamageable
         if (selectedCharacter != null)
         {
             ApplyCharacterStats(selectedCharacter);
+            RecalculateStatsFromInventory();
         }
     }
 
@@ -194,8 +190,8 @@ public class PlayerMovement : MonoBehaviour, IDamageable
 
     private void UpdateSpeeds()
     {
-        WalkSpeed = moveSpeed;
-        SprintSpeed = moveSpeed * 1.3f; // sprint = 30% faster than walk
+        WalkSpeed = CurrentSpeedStat;
+        SprintSpeed = CurrentSpeedStat * 1.3f; // sprint = 30% faster than walk
     }
 
 
@@ -256,7 +252,7 @@ public class PlayerMovement : MonoBehaviour, IDamageable
     private IEnumerator PerformMeleeAttack()
     {
         // Set current attack damage from character data
-        int attackDamage = selectedCharacter.baseAttackDamage;
+        int attackDamage = CurrentDamage;
 
         // Set the damage on the melee hitbox script
         MeleeHitbox hitboxScript = meleeHitboxObject.GetComponent<MeleeHitbox>();
@@ -279,8 +275,8 @@ public class PlayerMovement : MonoBehaviour, IDamageable
             return;
         }
 
-            // Default direction is forward
-            Vector3 direction = transform.forward;
+        // Default direction is forward
+        Vector3 direction = transform.forward;
 
         // Raycast to get mouse position in world space
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -295,7 +291,7 @@ public class PlayerMovement : MonoBehaviour, IDamageable
         {
             Debug.Log("Raycast did not hit");
         }
-
+       
         // Rotate the fire point to face the target direction
         rangedFirePoint.rotation = Quaternion.LookRotation(direction);
 
@@ -308,7 +304,7 @@ public class PlayerMovement : MonoBehaviour, IDamageable
 
         if (projectile.TryGetComponent<Projectile>(out var projScript))
         {
-            projScript.Initialize(attackDamage, gameObject);
+            projScript.Initialize(CurrentDamage, gameObject);
             Debug.Log("Projectile initialized and launched.");
         }
         else
@@ -320,8 +316,8 @@ public class PlayerMovement : MonoBehaviour, IDamageable
     public void TakeDamage(int amount)
     {
         currentHP -= amount;
-        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
-        HUDSingleton.Instance.SetHealth(currentHP, maxHP);
+        currentHP = Mathf.Clamp(currentHP, 0, CurrentMaxHP);
+        HUDSingleton.Instance.SetHealth(currentHP, CurrentMaxHP);
 
         if (currentHP <= 0)
         {
@@ -333,5 +329,72 @@ public class PlayerMovement : MonoBehaviour, IDamageable
     {
         Debug.Log("Player died!");
         // Disable movement, trigger respawn or return to lobby, etc.
+    }
+
+    public void RecalculateStatsFromInventory()
+    {
+        Debug.Log("recalculating stats!");
+        // Start from base stats
+        CurrentMaxHP = selectedCharacter.baseHP;
+        CurrentDamage = selectedCharacter.baseAttackDamage;
+        CurrentAttackSpeed = selectedCharacter.baseAttackSpeed;
+        CurrentSpeedStat = selectedCharacter.baseSpeed;
+
+        // Apply all modifiers from each item in inventory
+        foreach (var item in PlayerInventory.Instance.collectedItems)
+        {
+            foreach (var mod in item.statModifiers)
+            {
+                float factor = mod.isMultiplier ? (1f + mod.value / 100f) : 1f;
+                int add = mod.isMultiplier ? 0 : Mathf.RoundToInt(mod.value);
+
+                switch (mod.statType)
+                {
+                    case StatType.HP://                 HEALTH
+                        if (mod.isMultiplier)
+                            CurrentMaxHP = Mathf.RoundToInt(CurrentMaxHP * factor);
+                        else
+                            CurrentMaxHP += add;
+                        break;
+
+                    case StatType.AttackDamage://       DAMAGE
+                        if (mod.isMultiplier)
+                            CurrentDamage = Mathf.RoundToInt(CurrentDamage * factor);
+                        else
+                            CurrentDamage += add;
+                        break;
+
+                    case StatType.AttackSpeed://        ATTACK SPEED
+                        if (mod.isMultiplier)
+                            CurrentAttackSpeed *= (1f + mod.value / 100f);
+                        else
+                            CurrentAttackSpeed += mod.value;
+                        break;
+
+                    case StatType.MovementSpeed://     MOVEMENT SPEED
+                        if (mod.isMultiplier)
+                            CurrentSpeedStat *= (1f + mod.value / 100f);
+                        else
+                            CurrentSpeedStat += mod.value;
+                        break;
+                }
+            }
+        }
+
+        // Clamp stats to prevent edge cases
+        CurrentDamage = Mathf.Max(CurrentDamage, 1);
+        CurrentSpeedStat = Mathf.Max(CurrentSpeedStat, 1f);
+        CurrentAttackSpeed = Mathf.Clamp(CurrentAttackSpeed, 0.2f, 15f);
+        CurrentMaxHP = Mathf.Max(CurrentMaxHP, 1);
+
+
+        // Recalculate derived values
+        attackCooldown = CurrentAttackSpeed > 0 ? 1f / CurrentAttackSpeed : 9999f;
+        WalkSpeed = CurrentSpeedStat;
+        SprintSpeed = CurrentSpeedStat * 1.3f;
+
+        // Clamp current HP to max and update HUD
+        currentHP = Mathf.Clamp(currentHP, 0, CurrentMaxHP);
+        HUDSingleton.Instance.SetHealth(currentHP, CurrentMaxHP);
     }
 }

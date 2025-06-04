@@ -112,6 +112,7 @@ public class ItemSpawner : MonoBehaviour
         if (inventory != null && spawnedItemData != null)
         {
             inventory.AddItem(spawnedItemData);
+            FindObjectOfType<PlayerMovement>()?.RecalculateStatsFromInventory();
         }
         else
         {

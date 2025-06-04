@@ -11,6 +11,7 @@ public class SceneTransitionTrigger : MonoBehaviour
     [Tooltip("Optional: Set a delay before the scene loads.")]
     public float transitionDelay = 0f;
 
+
     private bool hasTriggered = false;
 
     private void OnTriggerEnter(Collider other)
@@ -34,6 +35,11 @@ public class SceneTransitionTrigger : MonoBehaviour
 
     private void LoadScene()
     {
+        if (PlayerInventory.Instance != null)
+        {
+            PlayerInventory.Instance.ClearInventory();
+        }
+
         SceneManager.LoadScene(sceneToLoad);
     }
 }

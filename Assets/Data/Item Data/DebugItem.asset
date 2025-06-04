@@ -12,16 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae88d2db70c94a4cae3b3115df95527, type: 3}
   m_Name: DebugItem
   m_EditorClassIdentifier: 
-  itemName: Debug item
-  description: an oddity
+  itemName: Debug Item
+  description: '"How''d that get there?"'
   rarity: 0
   statModifiers:
   - statType: 0
     isMultiplier: 1
-    value: 15
+    value: 200
   - statType: 3
     isMultiplier: 0
-    value: -1
+    value: 10
+  - statType: 2
+    isMultiplier: 1
+    value: 100
+  - statType: 1
+    isMultiplier: 0
+    value: 100
   uniqueEffect: 0
   modelPrefab: {fileID: 4422970937050545558, guid: 72808c78506df2a45b7981c1e5087749, type: 3}
   rarityColors:

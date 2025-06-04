@@ -171,18 +171,53 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5527122138125947923, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
+      propertyPath: m_fontSize
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5527122138125947923, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 6771307040745056479, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817844335950721739, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
+      propertyPath: m_fontSize
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817844335950721739, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
+      propertyPath: m_fontStyle
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817844335950721739, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7731866126437430873, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
       propertyPath: m_Name
       value: ItemWorldSpaceUI
       objectReference: {fileID: 0}
+    - target: {fileID: 8539860704739024802, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539860704739024802, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539860704739024802, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 33
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7731866126437430873, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8811698458844068829}
   m_SourcePrefab: {fileID: 100100000, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
 --- !u!114 &132017111696156796 stripped
 MonoBehaviour:
@@ -200,6 +235,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7731866126437430873, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
   m_PrefabInstance: {fileID: 8599248338365544414}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8811698458844068829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025407669376434567}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2917240c0eb9c6419841a58b3f23835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3011627772069348629 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6817844335950721739, guid: 8488ebe14f1c22e40869b15cabebc244, type: 3}
