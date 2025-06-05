@@ -43,7 +43,6 @@ public class TabletInteraction : Interactable
 
     public override void Interact()
     {
-        Debug.Log("TabletInteraction Interact called!");
         base.Interact();
 
         switch (interactionType)

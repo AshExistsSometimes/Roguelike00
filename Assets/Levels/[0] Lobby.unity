@@ -7898,7 +7898,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7eb2dc64104d544788b9e8b631deb47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dungeonButtonPrefab: {fileID: 8483556945699992309, guid: 966e0c853691a9f44b7ca8af14973711, type: 3}
+  dungeonButtonPrefab: {fileID: 8434208582612110098, guid: 966e0c853691a9f44b7ca8af14973711, type: 3}
   contentParent: {fileID: 50206788}
   allDungeons:
   - {fileID: 11400000, guid: f5ef7277c490aaf47876e4c8c81a4e39, type: 2}
@@ -8544,6 +8544,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: DungeonManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8465363645883909778, guid: 93a6ca7373ea3bf489102145ea8d4bf4, type: 3}
+      propertyPath: allDungeons.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465363645883909778, guid: 93a6ca7373ea3bf489102145ea8d4bf4, type: 3}
+      propertyPath: allDungeons.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f5ef7277c490aaf47876e4c8c81a4e39, type: 2}
+    - target: {fileID: 8465363645883909778, guid: 93a6ca7373ea3bf489102145ea8d4bf4, type: 3}
+      propertyPath: allDungeons.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: f5ef7277c490aaf47876e4c8c81a4e39, type: 2}
+    - target: {fileID: 8465363645883909778, guid: 93a6ca7373ea3bf489102145ea8d4bf4, type: 3}
+      propertyPath: allDungeons.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: f5ef7277c490aaf47876e4c8c81a4e39, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

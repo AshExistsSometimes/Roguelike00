@@ -11,6 +11,8 @@ public class DungeonManager : MonoBehaviour
     public DungeonData CurrentDungeon { get; private set; }
     public int CurrentFloor { get; private set; }
 
+    public DungeonGenerator generator;
+
     private const string SaveFileName = "SaveData.txt";
     private Dictionary<string, int> highScores = new();
 
@@ -21,6 +23,12 @@ public class DungeonManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        {
+            if (generator == null)
+                generator = FindObjectOfType<DungeonGenerator>();
+        }
+
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
@@ -79,10 +87,21 @@ public class DungeonManager : MonoBehaviour
 
         CurrentFloor = floor;
 
-        Debug.Log($"[DungeonManager] Generating dungeon: {CurrentDungeon.dungeonDisplayName} | Floor {CurrentFloor}");
+        // Load scene
+        SceneManager.LoadScene(CurrentDungeon.floorSceneName);
 
-        // TODO: Call procedural generator
-        // ProceduralGenerator.Generate(CurrentDungeon, CurrentFloor);
+        SceneManager.sceneLoaded += OnFloorSceneLoaded;
+    }
+
+    private void OnFloorSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"[DungeonManager] Generating dungeon: {CurrentDungeon.dungeonDisplayName} | Floor {CurrentFloor}");
+        SceneManager.sceneLoaded -= OnFloorSceneLoaded;
+
+        if (generator == null)
+            generator = FindObjectOfType<DungeonGenerator>();
+
+        generator.Generate(CurrentDungeon, CurrentFloor);
     }
 
     // === Save/Load ===

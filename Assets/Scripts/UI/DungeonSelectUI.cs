@@ -53,18 +53,16 @@ public class DungeonSelectUI : MonoBehaviour
         foreach (DungeonData dungeon in allDungeons)
         {
             GameObject buttonObj = Instantiate(dungeonButtonPrefab, contentParent);
-            buttonObj.transform.Find("Icon").GetComponent<Image>().sprite = dungeon.dungeonIcon;
-            buttonObj.transform.Find("Name").GetComponent<Text>().text = dungeon.dungeonDisplayName;
 
-            int highFloor = int.TryParse(dungeon.dungeonID, out int id)
-            ? SaveSystem.GetHighestFloor(id)
-            : 0;
-            buttonObj.transform.Find("HighScore").GetComponent<Text>().text = $"Floor {highFloor}";
-
-            buttonObj.GetComponent<Button>().onClick.AddListener(() =>
+            DungeonButtonUI buttonUI = buttonObj.GetComponent<DungeonButtonUI>();
+            if (buttonUI != null)
             {
-                dungeonManager.GenerateDungeonLayout(dungeon.dungeonID, 1);
-            });
+                buttonUI.Setup(dungeon);
+            }
+            else
+            {
+                Debug.LogError("DungeonButtonUI component missing from prefab!");
+            }
         }
     }
 

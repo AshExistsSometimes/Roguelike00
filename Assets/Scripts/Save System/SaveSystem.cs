@@ -74,13 +74,13 @@ public static class SaveSystem
 
     // ===== Dungeon High Floor Tracking =====
 
-    public static int GetHighestFloor(int dungeonID)
+    public static int GetHighestFloor(string dungeonID)
     {
         string key = $"Dungeon_{dungeonID}_HighFloor";
         return saveData.ContainsKey(key) && int.TryParse(saveData[key], out int result) ? result : 0;
     }
 
-    public static void SaveHighestFloor(int dungeonID, int floor)
+    public static void SaveHighestFloor(string dungeonID, int floor)
     {
         string key = $"Dungeon_{dungeonID}_HighFloor";
         int currentHigh = GetHighestFloor(dungeonID);

@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Levels/[0] Lobby.unity
     guid: 95af24ff5c9723441b2dad88be569151
+  - enabled: 1
+    path: Assets/Levels/Dungeon Scenes/DungeonTemplate.unity
+    guid: 21888cb62ca671a4cb1c6d4151115424
   m_configObjects: {}

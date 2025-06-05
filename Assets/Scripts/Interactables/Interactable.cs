@@ -8,7 +8,6 @@ public abstract class Interactable : MonoBehaviour, IInteractable
 
     public virtual void Interact()
     {
-        Debug.Log($"Default Interact called on {gameObject.name}");
     }
 
     public virtual void OnFocus()

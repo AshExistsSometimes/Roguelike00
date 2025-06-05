@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074eede6e37bac14d8124edabd303be2, type: 3}
   m_Name: Debug_Dungeon
   m_EditorClassIdentifier: 
+  dungeonID: Debug_Dungeon
+  dungeonDisplayName: Debug Dungeon
+  dungeonIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  floorSceneName: DungeonTemplate
   startRoomPrefab: {fileID: 0}
   roomPrefabs: []
   endRoomPrefabs: []
