@@ -1,0 +1,14 @@
+Creating Rooms:
+- Build room, include doors to make it accessible
+- Give the room prefab the "Room Instance" script
+- Add prefabs: DoorAnchors and RoomBounds
+
+	DoorAnchors:
+	Place one door anchor on each door
+	Ensure the positive Z of each door faces out of the room
+
+	RoomBounds:
+	ensure the collider provided encompasses the entire room, this prevents 	overlap
+
+
+

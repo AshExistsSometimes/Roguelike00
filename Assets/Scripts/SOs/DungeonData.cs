@@ -28,6 +28,10 @@ public class DungeonData : ScriptableObject
     [Header("Boss Room Frequency")]
     [Tooltip("How many floors between bosses. 1 = boss every floor.")]
     public int floorsPerBoss = 3;
+
+    [Header("Placement Bias")]
+    [Tooltip("Directional bias (e.g., 0, 0, 1 for positive Z growth).")]
+    public Vector3 placementBias = new Vector3(0, 0, 1);
 }
 
 [System.Serializable]
@@ -40,9 +44,8 @@ public class RoomPrefabData
 }
 
 [System.Serializable]
-public class EndRoomData
+public class EndRoomData : RoomPrefabData
 {
-    public GameObject roomPrefab;
     public EndRoomType roomType;
 }
 

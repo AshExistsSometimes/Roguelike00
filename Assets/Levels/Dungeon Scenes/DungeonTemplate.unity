@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14cb51bd460b9874da92d017ab99470e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentDungeon: {fileID: 0}
+  currentDungeon: {fileID: 11400000, guid: f5ef7277c490aaf47876e4c8c81a4e39, type: 2}
   currentFloor: 1
 --- !u!1 &1850583907
 GameObject:

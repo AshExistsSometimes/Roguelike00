@@ -394,4 +394,9 @@ public class PlayerMovement : MonoBehaviour, IDamageable
         currentHP = Mathf.Clamp(currentHP, 0, CurrentMaxHP);
         HUDSingleton.Instance.SetHealth(currentHP, CurrentMaxHP);
     }
+
+    public void ResetTransform()
+    {
+        transform.position = new Vector3(0, 1, 0);
+    }
 }

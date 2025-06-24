@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
@@ -20,6 +21,11 @@ public class CameraController : MonoBehaviour
 
     private Coroutine overrideRoutine;
 
+
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
     private void Start()
     {
         currentOffset = defaultPositionOffset;
@@ -64,6 +70,11 @@ public class CameraController : MonoBehaviour
     private IEnumerator ResetAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
+        ReturnToDefaultCameraAngle();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
         ReturnToDefaultCameraAngle();
     }
 }
