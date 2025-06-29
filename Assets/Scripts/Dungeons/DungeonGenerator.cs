@@ -152,7 +152,7 @@ public class DungeonGenerator : MonoBehaviour
                             }
                         }
                     }
-                        break;
+                    break;
                 }
             }
         }
@@ -196,13 +196,22 @@ public class DungeonGenerator : MonoBehaviour
 
         // STEP 5: Cap remaining unconnected doors with 1-door rooms
         CapUnconnectedDoors();
+        CapUnconnectedDoors();// Band Aid in case it doeesnt get every single door, usually there are so few left uncapped on larger levels this should cover them all
 
         Debug.Log($"[DungeonGenerator] Total rooms placed: {spawnedRooms.Count}");
+
+        if (roomsPlaced < dungeonData.minRoomCount)
+        {
+            Debug.LogWarning($"Generated only {roomsPlaced} rooms, below min of {dungeonData.minRoomCount}. Retrying...");
+            ClearExistingDungeon();
+            Generate(dungeonData, floor);
+        }
 
         // STEP 6: Build graph for Gizmo drawing
         BuildRoomConnectionGraph();
 
         // STEP 7: (teleport player to spawn (TO BE IMPLEMENTED AGAIN CUZ IT WAS BROKEN)
+        StartCoroutine(TeleportPlayerToStartRoom());
     }
 
     private void TryCloseLoops()
@@ -440,5 +449,25 @@ public class DungeonGenerator : MonoBehaviour
     {
         var origin = door.Position + door.Forward * 0.5f;
         return !Physics.CheckSphere(origin + door.Forward * 1.0f, 0.45f);
+    }
+
+    private IEnumerator TeleportPlayerToStartRoom()
+    {
+        // Short delay to ensure rooms are generated
+        yield return new WaitForSeconds(0.01f);
+        Debug.Log("Finding Spawnpoint");
+        GameObject spawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawnPoint");
+        Debug.Log($"Spawnpoint found at: {spawnPoint.transform.position}");
+
+        if (spawnPoint != null && PlayerMovement.Instance != null)
+        {
+            Debug.Log("Teleporting Player..");
+            PlayerMovement.Instance.TeleportTo(spawnPoint.transform.position);
+            Debug.Log($"Sending Player to: {spawnPoint.transform.position}");
+        }
+        else
+        {
+            Debug.LogWarning("Could not find PlayerSpawnPoint or PlayerController.");
+        }
     }
 }

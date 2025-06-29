@@ -57,6 +57,22 @@ public class PlayerMovement : MonoBehaviour, IDamageable
 
     public float CurrentSpeedStat;
 
+    // Singleton Creation
+    public static PlayerMovement Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); // Prevent duplicates
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+
     private void Start()
     {
         currentSpeed = WalkSpeed;
@@ -290,7 +306,7 @@ public class PlayerMovement : MonoBehaviour, IDamageable
         {
             Debug.Log("Raycast did not hit");
         }
-       
+
         // Rotate the fire point to face the target direction
         rangedFirePoint.rotation = Quaternion.LookRotation(direction);
 
@@ -398,5 +414,22 @@ public class PlayerMovement : MonoBehaviour, IDamageable
     public void ResetTransform()
     {
         transform.position = new Vector3(0, 1, 0);
+    }
+
+    public void TeleportTo(Vector3 position)
+    {
+        Debug.Log($"Player registered teleport target as: {position}");
+
+        CharacterController cc = GetComponent<CharacterController>();
+        if (cc != null && cc.enabled)
+        {
+            cc.enabled = false; // Temporarily disable to avoid teleport collision issues
+            transform.position = position;
+            cc.enabled = true;
+        }
+        else
+        {
+            transform.position = position; // Fallback
+        }
     }
 }

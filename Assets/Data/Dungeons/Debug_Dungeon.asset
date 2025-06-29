@@ -46,8 +46,8 @@ MonoBehaviour:
     doorCount: 1
     isCorridor: 0
     roomType: 1
-  minRoomCount: 25
-  maxRoomCount: 50
+  minRoomCount: 10
+  maxRoomCount: 20
   roomCountGrowthPerFloor: 5
   floorsPerBoss: 3
   placementBias: {x: 0, y: 0, z: 1.5}
