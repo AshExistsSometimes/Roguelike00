@@ -12,6 +12,7 @@ public class DungeonGenerator : MonoBehaviour
     public DungeonData currentDungeon;
     public int currentFloor = 1;
 
+    private Dictionary<RoomInstance, RoomPrefabData> roomDataLookup = new Dictionary<RoomInstance, RoomPrefabData>();
     private List<GameObject> spawnedRooms = new List<GameObject>();
     private RoomInstance startRoom;
     private RoomInstance endRoom;
@@ -39,38 +40,119 @@ public class DungeonGenerator : MonoBehaviour
         int roomsPlaced = 0;
 
         // STEP 2: Spawn Intermediate Rooms
+        bool forceCorridorNext = false;
+        int corridorStreak = 0;
+
         while (roomsPlaced < totalRooms && openRooms.Count > 0)
         {
             RoomInstance fromRoom = openRooms[0];
             openRooms.RemoveAt(0);
 
-            // Prioritize forward‐facing doors
             var fromDoors = fromRoom.GetUnconnectedDoors()
                 .OrderByDescending(d => d.Forward.z)
                 .ToList();
+
+            bool attachedAnyRoom = false;
 
             foreach (var fromDoor in fromDoors)
             {
                 if (!CanPlaceInFront(fromDoor)) continue;
 
-                // Pick a room with >1 door
                 RoomPrefabData nextRoomData = null;
+
                 for (int a = 0; a < 10; a++)
                 {
-                    var candidate = GetRandomRoom(dungeonData.roomPrefabs);
-                    if (candidate != null && candidate.doorCount > 1)
+                    var candidate = GetRandomRoom(currentDungeon.roomPrefabs);
+                    if (candidate == null || candidate.doorCount < 2) continue;
+
+                    bool allowThisOne = true;
+
+                    if (forceCorridorNext)
+                    {
+                        allowThisOne = candidate.isCorridor;
+                    }
+                    else if (corridorStreak >= 1)
+                    {
+                        if (candidate.isCorridor)
+                        {
+                            // 25% chance to accept another corridor
+                            allowThisOne = UnityEngine.Random.value < 0.25f;
+                        }
+                        else
+                        {
+                            allowThisOne = true;
+                        }
+                    }
+
+                    if (allowThisOne)
                     {
                         nextRoomData = candidate;
                         break;
                     }
                 }
+
                 if (nextRoomData == null) continue;
 
                 if (TryAttachRoom(nextRoomData, fromDoor, out RoomInstance newRoom))
                 {
                     openRooms.Add(newRoom);
                     roomsPlaced++;
-                    break;
+                    attachedAnyRoom = true;
+
+                    // Update corridor tracking
+                    if (nextRoomData.isCorridor)
+                    {
+                        corridorStreak++;
+                        forceCorridorNext = false;
+                    }
+                    else
+                    {
+                        corridorStreak = 0;
+                        forceCorridorNext = true;
+                    }
+
+                    // if fromRoom has more than 2 doors, spawn corridors for all remaining unconnected doors**
+                    if (roomDataLookup.TryGetValue(fromRoom, out var fromRoomData))
+                    {
+                        if (!fromRoomData.isCorridor && fromRoom.Doors.Count > 1)
+                        {
+                            var remainingDoors = fromRoom.GetUnconnectedDoors();
+                            foreach (var extraDoor in remainingDoors)
+                            {
+                                if (!CanPlaceInFront(extraDoor)) continue;
+
+                                var corridorRoom = currentDungeon.roomPrefabs
+                                    .Where(r => r.isCorridor)
+                                    .OrderBy(_ => UnityEngine.Random.value)
+                                    .FirstOrDefault();
+
+                                if (corridorRoom != null)
+                                {
+                                    TryAttachRoom(corridorRoom, extraDoor, out RoomInstance corridorInstance);
+                                    if (corridorInstance != null)
+                                    {
+                                        openRooms.Add(corridorInstance);
+                                        roomDataLookup[newRoom] = nextRoomData;
+                                        roomsPlaced++;
+
+                                        if (nextRoomData.isCorridor)
+                                        {
+                                            corridorStreak++;
+                                            forceCorridorNext = false;
+                                        }
+                                        else
+                                        {
+                                            corridorStreak = 0;
+                                            forceCorridorNext = true;
+                                        }
+
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                        break;
                 }
             }
         }

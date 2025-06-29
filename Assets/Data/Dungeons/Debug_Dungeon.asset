@@ -20,25 +20,33 @@ MonoBehaviour:
   roomPrefabs:
   - roomPrefab: {fileID: 6220270761593618786, guid: 554989f173b80de4190343ca05000d83, type: 3}
     doorCount: 4
+    isCorridor: 0
   - roomPrefab: {fileID: 4088993133608107485, guid: 776dc66e394a8644199b60caf6a0b90b, type: 3}
     doorCount: 2
+    isCorridor: 1
   - roomPrefab: {fileID: 1653335522724874127, guid: a6177c482f63a964dbba86bdefacc292, type: 3}
     doorCount: 2
+    isCorridor: 0
   - roomPrefab: {fileID: 7630851969939202219, guid: 90b58778311e5434384a58040b2b113d, type: 3}
     doorCount: 3
+    isCorridor: 0
   - roomPrefab: {fileID: 4088993133608107485, guid: 97625e007679e1a428b6dbd6802a512a, type: 3}
     doorCount: 1
+    isCorridor: 0
   endRoomPrefabs:
   - roomPrefab: {fileID: 2349507686247902473, guid: fa60de90319b8c24b8a9bfee8514437f, type: 3}
     doorCount: 1
+    isCorridor: 0
     roomType: 0
   - roomPrefab: {fileID: 2349507686247902473, guid: fa60de90319b8c24b8a9bfee8514437f, type: 3}
     doorCount: 1
+    isCorridor: 0
     roomType: 1
   - roomPrefab: {fileID: 2349507686247902473, guid: fa60de90319b8c24b8a9bfee8514437f, type: 3}
     doorCount: 1
+    isCorridor: 0
     roomType: 1
-  minRoomCount: 20
+  minRoomCount: 25
   maxRoomCount: 50
   roomCountGrowthPerFloor: 5
   floorsPerBoss: 3

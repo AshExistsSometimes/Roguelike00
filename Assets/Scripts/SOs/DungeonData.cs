@@ -41,6 +41,9 @@ public class RoomPrefabData
 
     [Tooltip("Number of doors/connectors in this room.")]
     public int doorCount;
+
+    [Tooltip("If true, this room is a straight corridor with no branches.")]
+    public bool isCorridor;
 }
 
 [System.Serializable]
