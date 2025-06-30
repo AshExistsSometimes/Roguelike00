@@ -56,9 +56,6 @@ public class TabletInteraction : Interactable
                 break;
         }
 
-
-
-
         hasActivated = true;
     }
 

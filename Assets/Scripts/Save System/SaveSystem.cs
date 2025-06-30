@@ -8,11 +8,13 @@ public static class SaveSystem
     private static readonly string savePath = Path.Combine(Application.persistentDataPath, "SaveData.txt");
     private static Dictionary<string, string> saveData = new Dictionary<string, string>();
 
+
     static SaveSystem()
     {
         Debug.Log($"[SaveSystem] Save file path: {savePath}");
         LoadSaveFile();
     }
+
 
     private static void LoadSaveFile()
     {

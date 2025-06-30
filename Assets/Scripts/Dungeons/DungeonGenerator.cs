@@ -189,10 +189,14 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
         if (!endRoomPlaced)
-            Debug.LogWarning("[DungeonGenerator] Failed to place end room.");
+        {
+            Debug.LogWarning("[DungeonGenerator] Failed to place end room, retrying...");
+            ClearExistingDungeon();
+            Generate(dungeonData, floor);
+        }
 
-        // STEP 4: Loop Closure using only 2-door rooms
-        TryCloseLoops();
+            // STEP 4: Loop Closure using only 2-door rooms
+            TryCloseLoops();
 
         // STEP 5: Cap remaining unconnected doors with 1-door rooms
         CapUnconnectedDoors();
@@ -203,6 +207,13 @@ public class DungeonGenerator : MonoBehaviour
         if (roomsPlaced < dungeonData.minRoomCount)
         {
             Debug.LogWarning($"Generated only {roomsPlaced} rooms, below min of {dungeonData.minRoomCount}. Retrying...");
+            ClearExistingDungeon();
+            Generate(dungeonData, floor);
+        }
+
+        if (roomsPlaced > (dungeonData.maxRoomCount + (dungeonData.maxRoomCount * 0.5)))
+        {
+            Debug.LogWarning($"Generated too many rooms for floor, below max of {dungeonData.maxRoomCount}. Retrying...");
             ClearExistingDungeon();
             Generate(dungeonData, floor);
         }
@@ -470,4 +481,19 @@ public class DungeonGenerator : MonoBehaviour
             Debug.LogWarning("Could not find PlayerSpawnPoint or PlayerController.");
         }
     }
+
+    public void GenerateNextFloor()
+    {
+        // Clear the existing dungeon first
+        ClearExistingDungeon();
+
+        // Increment the current floor number
+        currentFloor++;
+
+        // Generate the next floor using the same dungeon data
+        Generate(currentDungeon, currentFloor);
+
+    }
+
 }
+
