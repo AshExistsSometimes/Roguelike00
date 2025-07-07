@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dungeonID: Debug_Dungeon
   dungeonDisplayName: Debug Dungeon
-  dungeonIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  dungeonIcon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   floorSceneName: DungeonTemplate
   startRoomPrefab: {fileID: 5936259431136751578, guid: 9f4383db06fa306478cc72a35cd1b9e9, type: 3}
   roomPrefabs:

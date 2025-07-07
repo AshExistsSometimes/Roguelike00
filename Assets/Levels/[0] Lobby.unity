@@ -7902,6 +7902,7 @@ MonoBehaviour:
   contentParent: {fileID: 50206788}
   allDungeons:
   - {fileID: 11400000, guid: f5ef7277c490aaf47876e4c8c81a4e39, type: 2}
+  - {fileID: 11400000, guid: 308b0a629b1a22d4a8d32d2ff6b58e24, type: 2}
   dungeonManager: {fileID: 257543115}
 --- !u!1 &1793083193
 GameObject:
@@ -8546,7 +8547,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8465363645883909778, guid: 93a6ca7373ea3bf489102145ea8d4bf4, type: 3}
       propertyPath: allDungeons.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8465363645883909778, guid: 93a6ca7373ea3bf489102145ea8d4bf4, type: 3}
       propertyPath: allDungeons.Array.data[0]
@@ -8555,7 +8556,7 @@ PrefabInstance:
     - target: {fileID: 8465363645883909778, guid: 93a6ca7373ea3bf489102145ea8d4bf4, type: 3}
       propertyPath: allDungeons.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: f5ef7277c490aaf47876e4c8c81a4e39, type: 2}
+      objectReference: {fileID: 11400000, guid: 308b0a629b1a22d4a8d32d2ff6b58e24, type: 2}
     - target: {fileID: 8465363645883909778, guid: 93a6ca7373ea3bf489102145ea8d4bf4, type: 3}
       propertyPath: allDungeons.Array.data[2]
       value: 
