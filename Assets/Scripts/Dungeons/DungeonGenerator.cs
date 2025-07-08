@@ -11,6 +11,7 @@ public class DungeonGenerator : MonoBehaviour
     [Header("Runtime References")]
     public DungeonData currentDungeon;
     public int currentFloor = 1;
+    private HashSet<RoomInstance> criticalPathRooms = new();
 
     private Dictionary<RoomInstance, RoomPrefabData> roomDataLookup = new Dictionary<RoomInstance, RoomPrefabData>();
     private List<GameObject> spawnedRooms = new List<GameObject>();
@@ -195,12 +196,15 @@ public class DungeonGenerator : MonoBehaviour
             Generate(dungeonData, floor);
         }
 
-            // STEP 4: Loop Closure using only 2-door rooms
-            TryCloseLoops();
+        // STEP 4: Loop Closure using only 2-door rooms
+        TryCloseLoops();
 
         // STEP 5: Cap remaining unconnected doors with 1-door rooms
         CapUnconnectedDoors();
         CapUnconnectedDoors();// Band Aid in case it doeesnt get every single door, usually there are so few left uncapped on larger levels this should cover them all
+
+        // STEP 6: Cleanup leftover issues
+        CleanUpGeneration();
 
         Debug.Log($"[DungeonGenerator] Total rooms placed: {spawnedRooms.Count}");
 
@@ -223,6 +227,80 @@ public class DungeonGenerator : MonoBehaviour
 
         // STEP 7: (teleport player to spawn (TO BE IMPLEMENTED AGAIN CUZ IT WAS BROKEN)
         StartCoroutine(TeleportPlayerToStartRoom());
+    }
+
+    private void CleanUpGeneration()
+    {
+        Debug.Log("[DungeonGenerator] Starting CleanUpGeneration...");
+
+        // Use the criticalPathRooms set built during BuildRoomConnectionGraph
+        var pathRooms = criticalPathRooms;
+
+        // Step 1: Find all unconnected doors excluding the StartRoom
+        var unconnectedDoors = FindObjectsOfType<DoorAnchor>()
+            .Where(d => !d.isConnected && !d.transform.root.CompareTag("StartRoom"))
+            .ToList();
+
+        // Step 2: Collect unique RoomInstances that contain unconnected doors
+        HashSet<RoomInstance> roomsToRemove = new HashSet<RoomInstance>();
+        foreach (var door in unconnectedDoors)
+        {
+            var room = door.GetComponentInParent<RoomInstance>();
+            if (room != null && room != startRoom && room != endRoom && !pathRooms.Contains(room))
+            {
+                roomsToRemove.Add(room);
+            }
+        }
+
+        // Step 3: For each room to remove, disconnect its doors first
+        foreach (var room in roomsToRemove)
+        {
+            foreach (var door in room.Doors)
+            {
+                if (door.isConnected && door.connectedTo != null)
+                {
+                    // Disconnect the counterpart door
+                    var connectedDoor = door.connectedTo;
+                    connectedDoor.isConnected = false;
+                    connectedDoor.connectedTo = null;
+
+                    // Disconnect this door too
+                    door.isConnected = false;
+                    door.connectedTo = null;
+                }
+            }
+        }
+
+        // Step 4: Remove the rooms and update tracking
+        foreach (var room in roomsToRemove)
+        {
+            if (spawnedRooms.Contains(room.gameObject))
+            {
+                spawnedRooms.Remove(room.gameObject);
+                DestroyImmediate(room.gameObject);
+            }
+        }
+
+        // Step 5: Re-run CapUnconnectedDoors to fill gaps
+        CapUnconnectedDoors();
+        CapUnconnectedDoors(); // Second pass
+
+        Debug.Log($"[DungeonGenerator] CleanUp complete. Removed {roomsToRemove.Count} rooms.");
+    }
+
+
+    private RoomInstance GetRoomAtPosition(Vector3 position)
+    {
+        foreach (var obj in spawnedRooms)
+        {
+            if (obj == null) continue;
+            var room = obj.GetComponent<RoomInstance>();
+            if (room != null && Vector3.Distance(room.transform.position, position) < 0.5f)
+            {
+                return room;
+            }
+        }
+        return null;
     }
 
     private void TryCloseLoops()
@@ -287,10 +365,13 @@ public class DungeonGenerator : MonoBehaviour
         }
     }
 
+
+
     private void BuildRoomConnectionGraph()
     {
         redPathEdges.Clear();
         bluePathEdges.Clear();
+        criticalPathRooms.Clear();
 
         var graph = new Dictionary<RoomInstance, List<RoomInstance>>();
         foreach (var obj in spawnedRooms)
@@ -335,13 +416,17 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
+        // Reconstruct red path and track critical rooms
         if (endRoom != null && cameFrom.ContainsKey(endRoom))
         {
             var cur = endRoom;
+            criticalPathRooms.Add(cur);
+
             while (cur != startRoom)
             {
                 var prev = cameFrom[cur];
                 redPathEdges.Add((prev.transform.position, cur.transform.position));
+                criticalPathRooms.Add(prev);
                 cur = prev;
             }
         }
@@ -358,13 +443,27 @@ public class DungeonGenerator : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+
+
+private void OnDrawGizmos()
     {
 #if UNITY_EDITOR
         Gizmos.color = Color.red;
         foreach (var e in redPathEdges) Gizmos.DrawLine(e.Item1, e.Item2);
         Gizmos.color = Color.blue;
         foreach (var e in bluePathEdges) Gizmos.DrawLine(e.Item1, e.Item2);
+
+
+        if (criticalPathRooms == null) return;
+
+        Gizmos.color = Color.red;
+        foreach (var room in criticalPathRooms)
+        {
+            if (room != null)
+            {
+                Gizmos.DrawWireCube(room.transform.position, Vector3.one * 3);
+            }
+        }
 #endif
     }
 

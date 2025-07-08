@@ -16,31 +16,25 @@ MonoBehaviour:
   dungeonDisplayName: The Beach
   dungeonIcon: {fileID: 21300000, guid: 2059a612a98d7264bbe698f07e372697, type: 3}
   floorSceneName: DungeonTemplate
-  startRoomPrefab: {fileID: 8800771442924895463, guid: 7f7c1f580aaacfe488f654e3f5f83ed4, type: 3}
+  startRoomPrefab: {fileID: 8512739924953343050, guid: 0b46fac4344a42c478d71ea165b03052, type: 3}
   roomPrefabs:
-  - roomPrefab: {fileID: 1463151043820412670, guid: ced62fbc28ddf3847add7240e21fe864, type: 3}
+  - roomPrefab: {fileID: 4552089475895914824, guid: 7f8ee754bc0758243a27bf6901ed60ba, type: 3}
     doorCount: 2
     isCorridor: 1
-  - roomPrefab: {fileID: 8464012886115151416, guid: 7802b210a4b621947809605ca941bf5c, type: 3}
+  - roomPrefab: {fileID: 4709545315162581810, guid: f182de98b2fe6274e9a1881774c8194c, type: 3}
     doorCount: 1
     isCorridor: 0
-  - roomPrefab: {fileID: 8588786856243843999, guid: d126b6648ffb52346a4125b2bb97426d, type: 3}
+  - roomPrefab: {fileID: 315217368692426841, guid: 9dc813d0671527c46b4566100f7a1777, type: 3}
     doorCount: 4
     isCorridor: 0
-  - roomPrefab: {fileID: 8485630941210164824, guid: 3affd9e1444f7314283d4cd913a83cb7, type: 3}
+  - roomPrefab: {fileID: 8482641034039967035, guid: bea14ef5ffc1b7343ad72b5aaf9f51c9, type: 3}
     doorCount: 3
     isCorridor: 0
-  - roomPrefab: {fileID: 7509942069718890766, guid: 56d8b00ed08c7c84c90aac78bb7b97b5, type: 3}
-    doorCount: 2
-    isCorridor: 0
-  - roomPrefab: {fileID: 5348353588962976927, guid: 6062fa19e8b09794085f0abe09563fb3, type: 3}
-    doorCount: 4
-    isCorridor: 0
-  - roomPrefab: {fileID: 4084313684702218049, guid: eec7da053b1e30745aef50747acc688e, type: 3}
+  - roomPrefab: {fileID: 3144022144932505859, guid: 09736c8d24a113d4dae695f1adb6e60e, type: 3}
     doorCount: 2
     isCorridor: 0
   endRoomPrefabs:
-  - roomPrefab: {fileID: 7549834610483154279, guid: 7b4a65fcf0c6d794f813191447f7303a, type: 3}
+  - roomPrefab: {fileID: 157019912170437042, guid: 150fa2bdd9e72534792b7e9d77ccd14a, type: 3}
     doorCount: 1
     isCorridor: 0
     roomType: 0
